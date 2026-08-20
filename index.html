@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบจองที่จอดรถอัจฉริยะ (แยกกลุ่มผู้ใช้งาน)</title>
+    <title>ระบบจองที่จอดรถอัจฉริยะ (Ban Chang School)</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -11,14 +11,15 @@
         body { font-family: 'Kanit', sans-serif; }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-4 md:p-6">
+<body class="min-h-screen flex flex-col items-center justify-center p-4 md:p-6 bg-cover bg-center bg-fixed" 
+      style="background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('school-bg.png');">
 
-    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl max-w-4xl w-full text-center">
+    <div class="bg-white/90 p-6 md:p-8 rounded-2xl shadow-xl max-w-4xl w-full text-center border border-white/50 backdrop-blur-sm">
         <h1 class="text-3xl font-bold text-gray-800 mb-2">🚗 ระบบจองที่จอดรถอัจฉริยะ 3.0</h1>
         <p class="text-gray-500 mb-6">โครงงานคอมพิวเตอร์ | ระบบแสดงผลรูปไอคอนรถยนต์แบบ Real-time</p>
 
-        <!-- Step 1: เลือกระดับผู้ใช้งาน (นักเรียน vs บุคลากร) -->
-        <div class="bg-indigo-50 p-3 rounded-2xl mb-6 border border-indigo-100 flex justify-center gap-3">
+        <!-- Step 1: เลือกระดับผู้ใช้งาน -->
+        <div class="bg-indigo-50/80 p-3 rounded-2xl mb-6 border border-indigo-100 flex justify-center gap-3">
             <button onclick="switchUserRole('student')" id="role-student" class="flex-1 py-3 px-4 rounded-xl font-bold text-sm transition-all cursor-pointer bg-white text-indigo-600 shadow-sm border border-indigo-200">
                 👨‍🎓 สำหรับนักเรียน
             </button>
@@ -28,7 +29,7 @@
         </div>
 
         <!-- แดชบอร์ดสรุปจำนวนช่องว่าง -->
-        <div class="flex flex-wrap justify-center gap-6 mb-6 text-sm font-medium bg-gray-50 p-3 rounded-xl">
+        <div class="flex flex-wrap justify-center gap-6 mb-6 text-sm font-medium bg-gray-50/80 p-3 rounded-xl">
             <div class="flex items-center gap-2">
                 <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-lg">
                     <i class="fa-solid fa-road"></i>
@@ -49,22 +50,17 @@
             </div>
         </div>
 
-        <!-- Step 2: ปุ่มสำหรับเลือกโซนย่อย (เปลี่ยนตามกลุ่มที่เลือก) -->
-        <div id="zone-tabs-container" class="grid gap-2 mb-6">
-            <!-- ปุ่มโซนจะถูกสร้างผ่าน JS -->
-        </div>
+        <!-- Step 2: ปุ่มสำหรับเลือกโซนย่อย -->
+        <div id="zone-tabs-container" class="grid gap-2 mb-6"></div>
 
         <!-- พื้นที่แสดงผังที่จอดรถกราฟิก -->
-        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 mb-6">
+        <div class="bg-gray-50/80 p-6 rounded-2xl border border-gray-100 mb-6">
             <h2 id="current-zone-title" class="text-lg font-bold text-gray-700 mb-4 text-left flex items-center gap-2">📍 กำลังแสดง: -</h2>
-            
-            <div id="parking-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-4">
-                <!-- ปุ่มช่องจอดรถจะถูกวาดตรงนี้ -->
-            </div>
+            <div id="parking-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-4"></div>
         </div>
 
         <!-- กล่องแสดงสถานะช่องที่เลือก -->
-        <div class="bg-slate-50 p-5 rounded-xl mb-6 text-left border border-slate-100">
+        <div class="bg-slate-50/80 p-5 rounded-xl mb-6 text-left border border-slate-100">
             <p class="text-gray-700 mb-2 text-center font-semibold">ซองจอดที่คุณเลือก: <span id="selected-slot" class="font-bold text-indigo-600 text-lg">ยังไม่ได้เลือก</span></p>
             
             <div id="booking-details" class="hidden text-sm border-t border-gray-200 pt-3 mt-2">
@@ -75,7 +71,7 @@
         </div>
 
         <!-- ฟอร์มกรอกข้อมูลการจอง -->
-        <div id="input-form" class="bg-indigo-50 p-5 rounded-xl mb-6 text-left hidden">
+        <div id="input-form" class="bg-indigo-50/90 p-5 rounded-xl mb-6 text-left hidden">
             <h3 class="text-indigo-900 font-semibold mb-3 text-sm flex items-center gap-1">📝 กรอกข้อมูลเพื่อขับรถเข้าจอด</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div>
@@ -121,12 +117,11 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        let currentRole = "student"; // Default เป็นนักเรียน
+        let currentRole = "student";
         let chosenSlot = "";
         let currentZone = "garage";
         let currentDatabaseSnapshot = null;
 
-        // ข้อมูลโซนแยกตามหมวดหมู่
         const roleData = {
             student: {
                 title: "นักเรียน",
@@ -146,40 +141,35 @@
             }
         };
 
-        // สลับหมวดหมู่ผู้ใช้งาน
         window.switchUserRole = function(role) {
             currentRole = role;
-            
-            // เปลี่ยนสไตล์ปุ่มเลือกระดับ
             const studentBtn = document.getElementById('role-student');
             const staffBtn = document.getElementById('role-staff');
 
             if (role === 'student') {
                 studentBtn.className = "flex-1 py-3 px-4 rounded-xl font-bold text-sm transition-all cursor-pointer bg-white text-indigo-600 shadow-sm border border-indigo-200";
                 staffBtn.className = "flex-1 py-3 px-4 rounded-xl font-bold text-sm transition-all cursor-pointer bg-transparent text-gray-600 hover:bg-white/50";
-                currentZone = "garage"; // เริ่มที่โซนโรงจอดรถ
+                currentZone = "garage";
             } else {
                 staffBtn.className = "flex-1 py-3 px-4 rounded-xl font-bold text-sm transition-all cursor-pointer bg-white text-indigo-600 shadow-sm border border-indigo-200";
                 studentBtn.className = "flex-1 py-3 px-4 rounded-xl font-bold text-sm transition-all cursor-pointer bg-transparent text-gray-600 hover:bg-white/50";
-                currentZone = "zone6"; // เริ่มที่โซนอาคาร 6
+                currentZone = "zone6";
             }
 
             renderZoneTabs();
             switchZone(currentZone);
         }
 
-        // วาดปุ่มเลือกโซนย่อยตามหมวดหมู่
         function renderZoneTabs() {
             const container = document.getElementById('zone-tabs-container');
             const zones = roleData[currentRole].zones;
             const zoneKeys = Object.keys(zones);
 
-            // ปรับเลย์เอาต์ตามจำนวนโซน
             container.className = zoneKeys.length === 2 ? "grid grid-cols-2 gap-2 mb-6" : "grid grid-cols-2 md:grid-cols-4 gap-2 mb-6";
             
             let html = "";
             zoneKeys.forEach(key => {
-                html += `<button onclick="switchZone('${key}')" id="tab-${key}" class="zone-tab bg-gray-200 text-gray-700 font-semibold py-2.5 px-4 rounded-xl shadow-sm transition-all cursor-pointer text-sm hover:bg-gray-300">${zones[key].title}</button>`;
+                html += `<button onclick="switchZone('${key}')" id="tab-${key}" class="zone-tab bg-gray-200/80 text-gray-700 font-semibold py-2.5 px-4 rounded-xl shadow-sm transition-all cursor-pointer text-sm hover:bg-gray-300">${zones[key].title}</button>`;
             });
             container.innerHTML = html;
         }
@@ -190,7 +180,7 @@
             document.getElementById('current-zone-title').innerText = "📍 กำลังแสดง: " + zoneInfo.title + " (" + roleData[currentRole].title + ")";
             
             document.querySelectorAll('.zone-tab').forEach(tab => {
-                tab.className = "zone-tab bg-gray-200 text-gray-700 font-semibold py-2.5 px-4 rounded-xl shadow-sm transition-all cursor-pointer text-sm hover:bg-gray-300";
+                tab.className = "zone-tab bg-gray-200/80 text-gray-700 font-semibold py-2.5 px-4 rounded-xl shadow-sm transition-all cursor-pointer text-sm hover:bg-gray-300";
             });
             const activeTab = document.getElementById('tab-' + zoneKey);
             if (activeTab) {
@@ -346,13 +336,11 @@
             let totalCategorySlots = 0;
             let reservedCountInRole = 0;
 
-            // คำนวณจำนวนช่องทั้งหมดของหมวดหมู่ที่เลือกอยู่
             const currentRoleZones = roleData[currentRole].zones;
             Object.keys(currentRoleZones).forEach(zKey => {
                 totalCategorySlots += currentRoleZones[zKey].count;
             });
 
-            // รีเซ็ตซองจอดรถทุกช่องบนหน้าจอเป็นถนนว่างก่อน
             document.querySelectorAll('#parking-grid button').forEach(btn => {
                 const slotId = btn.id.replace('btn-', '');
                 const iconContainer = document.getElementById(`icon-container-${slotId}`);
@@ -363,13 +351,10 @@
                 }
             });
 
-            // ไล่เช็กข้อมูลสดจาก Firebase
             if (currentDatabaseSnapshot) {
                 Object.keys(currentDatabaseSnapshot).forEach((slotName) => {
                     const slotData = currentDatabaseSnapshot[slotName];
                     if (slotData.status === "reserved") {
-                        
-                        // นับยอดเฉพาะหมวดหมู่ที่กำลังเลือกอยู่
                         let isSlotInCurrentRole = false;
                         Object.keys(currentRoleZones).forEach(zKey => {
                             if (slotName.startsWith(currentRoleZones[zKey].prefix)) {
@@ -381,7 +366,6 @@
                             reservedCountInRole++;
                         }
 
-                        // เปลี่ยนไอคอนเฉพาะโซนที่กำลังแสดงผลอยู่
                         const iconContainer = document.getElementById(`icon-container-${slotName}`);
                         const btn = document.getElementById("btn-" + slotName);
                         if (iconContainer && btn) {
@@ -393,7 +377,6 @@
                 });
             }
 
-            // อัปเดตเลขอสรุปผลเฉพาะหมวดหมู่นั้นๆ
             document.getElementById('total-reserved').innerText = reservedCountInRole;
             document.getElementById('total-available').innerText = totalCategorySlots - reservedCountInRole;
         }
@@ -404,7 +387,6 @@
             updateButtonColors();
         });
 
-        // เริ่มต้นสร้างหน้าเว็บหมวดนักเรียน
         renderZoneTabs();
         switchZone('garage');
     </script>
